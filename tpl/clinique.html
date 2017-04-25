@@ -1,0 +1,20 @@
+<section ng-controller="CliniqueCtrl as cliniqueCtrl">
+    <header>
+        <h3>Tratamentos Disponíveis</h3>
+    </header>
+
+    <ul class="list-group"
+        ng-cloak>
+        <li class="list-group-item"
+        ng-repeat="item in cliniqueCtrl.cliniq.treatments | orderBy: 'codigo'">
+            <h3>
+                Tratamento {{item.codigo}}
+
+                <span class="label label-default">
+                    Duração: {{item.duracao}}
+                </span>
+            </h3>
+            <p ng-bind="item.descricao"></p>
+        </li>
+    </ul>
+</section>

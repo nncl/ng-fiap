@@ -1,0 +1,25 @@
+<section ng-controller="DoctorCtrl as doctorCtrl">
+    <header>
+        <h3>Médicos</h3>
+    </header>
+
+    <p ng-cloak ng-if="doctorCtrl.doctor.isLoading">
+        <span class="glyphicon-spin glyphicon glyphicon glyphicon-repeat"
+              aria-hidden="true"></span>
+    </p>
+
+    <ul class="list-group"
+        ng-cloak
+        ng-if="!doctorCtrl.doctor.isLoading">
+        <li class="list-group-item"
+        ng-repeat="item in doctorCtrl.doctor.results">
+            <h3>
+                {{item.nome}}
+                <span class="label label-default">
+                    CRM: {{item.crm}}
+                </span>
+            </h3>
+            <p ng-bind="item.especialidade"></p>
+        </li>
+    </ul>
+</section>
