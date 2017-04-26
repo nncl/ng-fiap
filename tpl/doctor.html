@@ -10,7 +10,7 @@
 
     <ul class="list-group"
         ng-cloak
-        ng-if="!doctorCtrl.doctor.isLoading">
+        ng-if="!doctorCtrl.doctor.isLoading && doctorCtrl.doctor.error == false">
         <li class="list-group-item"
         ng-repeat="item in doctorCtrl.doctor.results">
             <h3>

@@ -5,9 +5,13 @@
 
 var app = angular.module('fiapApp', [
     'ngRoute',
+
+    'controllers.agenda',
     'controllers.clinique',
     'controllers.doctor',
-    'services.doctor'
+
+    'services.doctor',
+    'services.treatment'
 ]);
 
 app.config(function ($routeProvider) {

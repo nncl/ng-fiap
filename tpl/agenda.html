@@ -1,31 +1,95 @@
-<section>
+<section ng-controller="AgendaCtrl as agendaCtrl">
     <header>
         <h3>Agenda</h3>
     </header>
 
-    <form>
-        <div class="form-group">
+    <form name="AgendaForm" novalidate
+          ng-submit="agendaCtrl.doBook(AgendaForm)">
+        <div class="form-group"
+             ng-class="{
+                'has-error' : !AgendaForm.date.$valid && (!AgendaForm.date.$pristine || AgendaForm.$submitted),
+                'has-success' : AgendaForm.date.$valid && (!AgendaForm.date.$pristine || AgendaForm.$submitted)
+             }">
             <label for="date">Data:</label>
-            <input type="date" class="form-control" id="date" required>
+            <input type="date"
+                   name="date"
+                   ng-model="agendaCtrl.agenda.book.date"
+                   class="form-control"
+                   id="date" required>
         </div>
-        <div class="form-group">
+        <div class="form-group"
+             ng-class="{
+                'has-error' : !AgendaForm.time.$valid && (!AgendaForm.time.$pristine || AgendaForm.$submitted),
+                'has-success' : AgendaForm.time.$valid && (!AgendaForm.time.$pristine || AgendaForm.$submitted)
+             }">
             <label for="time">Hora:</label>
-            <input type="time" class="form-control" id="time" required>
+            <input type="time"
+                   name="time"
+                   ng-model="agendaCtrl.agenda.book.time"
+                   class="form-control" id="time" required>
         </div>
-        <div class="checkbox">
+        <div class="checkbox"
+             ng-class="{
+                'has-error' : !AgendaForm.plan.$valid && (!AgendaForm.plan.$pristine || AgendaForm.$submitted),
+                'has-success' : AgendaForm.plan.$valid && (!AgendaForm.plan.$pristine || AgendaForm.$submitted)
+             }">
             <label>
-                <input type="radio" name="plan" value="convenio" required> Convênio
+                <input type="radio" name="plan"
+                       ng-model="agendaCtrl.agenda.book.plan"
+                       value="convenio" required> Convênio
             </label>
             <br>
             <label>
-                <input type="radio" name="plan" value="particular" required> Particular
+                <input type="radio" name="plan"
+                       ng-model="agendaCtrl.agenda.book.plan"
+                       value="particular" required> Particular
             </label>
         </div>
-        <div class="checkbox">
-            <select name="" id="" class="form-control" required>
+        <div class="form-group"
+             ng-class="{
+                'has-error' : !AgendaForm.treatment.$valid && (!AgendaForm.treatment.$pristine || AgendaForm.$submitted),
+                'has-success' : AgendaForm.treatment.$valid && (!AgendaForm.treatment.$pristine || AgendaForm.$submitted)
+             }">
+            <select class="form-control"
+                    ng-options="item as item.descricao for item in agendaCtrl.agenda.treatments track by item.codigo"
+                    name="treatment"
+                    ng-model="agendaCtrl.agenda.book.treatment"
+                    required>
                 <option value="">Tratamento</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <div class="form-group"
+             ng-class="{
+                'has-error' : !AgendaForm.doctor.$valid && (!AgendaForm.doctor.$pristine || AgendaForm.$submitted),
+                'has-success' : AgendaForm.doctor.$valid && (!AgendaForm.doctor.$pristine || AgendaForm.$submitted)
+             }">
+            <p ng-cloak ng-if="agendaCtrl.agenda.doctors.isLoading">
+                <span class="glyphicon-spin glyphicon glyphicon glyphicon-repeat"
+                      aria-hidden="true"></span>
+            </p>
+
+            <select class="form-control"
+                    name="doctor"
+                    ng-if="!agendaCtrl.agenda.doctors.isLoading && agendaCtrl.agenda.doctors.error == false"
+                    ng-options="item as item.nome for item in agendaCtrl.agenda.doctors.results | orderBy: 'nome' track by item.crm"
+                    ng-model="agendaCtrl.agenda.book.doctor"
+                    required>
+                <option value="">Médico</option>
+            </select>
+        </div>
+
+        <footer>
+            <button type="submit" class="btn btn-primary">Agendar</button>
+        </footer>
     </form>
+
+    <div ng-if="agendaCtrl.agenda.book.booked">
+
+        <br>
+
+        <div class="alert alert-success">
+            <strong>Agendado com sucesso!</strong>
+            <p>Data: {{agendaCtrl.agenda.book.booked.created_at_date | date: 'dd/MM/yyyy'}} às {{agendaCtrl.agenda.book.booked.created_at_time| date: 'HH:mm'}}</p>
+        </div>
+    </div>
 </section>

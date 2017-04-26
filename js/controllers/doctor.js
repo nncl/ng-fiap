@@ -5,7 +5,7 @@
 
 var app = angular.module('controllers.doctor', []);
 
-app.controller('DoctorCtrl', function (DoctorFactory) {
+app.controller('DoctorCtrl', function (DoctorService) {
     var vm = this;
 
     vm.doctor = {
@@ -14,7 +14,7 @@ app.controller('DoctorCtrl', function (DoctorFactory) {
         "error" : null
     };
 
-    DoctorFactory.getList().then(
+    DoctorService.getList().then(
         function (res) {
             vm.doctor.results = res.data;
             vm.doctor.isLoading = false;

@@ -5,7 +5,7 @@
 
 var app = angular.module('services.doctor', []);
 
-app.service('DoctorFactory', function ($q, $http) {
+app.service('DoctorService', function ($q, $http) {
     var self = {
 
         /**
